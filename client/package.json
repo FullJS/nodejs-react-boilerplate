@@ -1,0 +1,37 @@
+{
+  "name": "boilerplate-client",
+  "version": "0.0.1",
+  "description": "Boilerplate to React",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willmeeh/nodejs-react-boilerplate.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "client",
+    "React",
+    "react"
+  ],
+  "authors": [
+    "Arthur Hoch <arthur.j.h96@gmail.com> (https://github.com/arthurhoch)",
+    "William Mehler <william.lucas.mehler@gmail.com> (https://github.com/willmeeh)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/willmeeh/nodejs-react-boilerplate/issues"
+  },
+  "homepage": "https://github.com/willmeeh/nodejs-react-boilerplate#readme",
+  "npmName": "boilerplate-client",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ]
+}
