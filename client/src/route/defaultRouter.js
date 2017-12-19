@@ -1,0 +1,20 @@
+
+import React from 'react';
+/* import { Route } from 'react-router-dom'; */
+
+/* import Login from 'scenes/Sign/scenes/Login/index';
+import CreateAccount from 'scenes/Sign/scenes/CreateAccount/index';
+import About from 'scenes/About/index'; */
+
+
+const DefaultRouter = (props) => {
+  return (
+    <div className="full-screen">
+{/*       <Route exact path="/login" component={Login} />
+      <Route exact path="/createAccount" component={CreateAccount} />
+      <Route exact path="/about" component={About} /> */}
+    </div>
+  );
+}
+
+export default DefaultRouter;
