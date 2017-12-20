@@ -15,9 +15,7 @@ class AppRouter extends Component {
     return (
         <BrowserRouter >
           <Switch>
-            <AdminRoute/>
             <OpenRoute />
-            <UserRoute/>
           </Switch>
         </BrowserRouter>
     );

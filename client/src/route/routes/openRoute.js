@@ -1,15 +1,21 @@
 
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { Layout } from 'antd';
 
-import Login from '../../screns/privilege/open/login/index';
 
+import Login from '../../screens/privilege/open/login/index';
+
+import Header from '../../screens/privilege/open/components/header/index'
+import Footer from '../../screens/privilege/open/components/footer/index'
 
 const OpenRoute = (props) => {
   return (
-    <div>
+    <Layout>
+      <Header />
       <Route exact path="/login" component={Login} />
-    </div>
+      <Footer />
+    </Layout>
   );
 }
 
