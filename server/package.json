@@ -4,7 +4,7 @@
   "description": "Boilerplate to Node.js",
   "main": "server.js",
   "scripts": {
-    "start": "mongod --dbpath ~/mongo-data-boilerplate & nodemon server",
+    "start": "sh ./scripts/start-dev.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,6 +39,8 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "mongodb": "^3.0.0-rc0",
     "mongoose": "^4.13.7",

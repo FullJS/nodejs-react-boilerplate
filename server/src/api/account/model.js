@@ -56,30 +56,18 @@ const AccountSchema = new mongoose.Schema({
         email: String,
         name: String
     },
-    bloqueado: {
-        type: Boolean,
-        default: false
+    updated: {
+        type: Date
     },
-    visitas: {
-        type: Number,
-        default: 0
-    },
-    sexo: {
-        type: String
-    },
-    imagemPerfil: {
-        type: String
-    },
-    dataCriacaoConta: {
+    created: {
         type: Date,
         default: Date.now
     },
-    dataNascimento: {
-        type: Date,
-        default: Date.now
-    },
-    hashConfirmacao: {
+    resetPasswordToken: {
         type: String
+    },
+    resetPasswordExpires: {
+        type: Date
     },
     tokens: [{
         access: {
@@ -133,7 +121,7 @@ AccountSchema.statics.findByToken = function (token) {
     var Account = this;
     var decoded;
 
-    var cert = fs.readFileSync('server/keys/Account.public_key.pem');
+    var cert = fs.readFileSync('./keys/public.pem');
 
     try {
         decoded = jwt.verify(token, cert, { algorithms: ['RS256'] });

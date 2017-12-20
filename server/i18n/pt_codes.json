@@ -1,0 +1,32 @@
+{
+    "SUCCESS_CREATE_ACCOUNT": {
+        "TYPE": "SUCCESS",
+        "COD": "SUCCESS_CREATE_ACCOUNT",
+        "MSG": "Your account has been successfully created!"
+    },
+    "SUCCESS_EDIT_ACCOUNT": {
+        "TYPE": "SUCCESS",
+        "COD": "SUCCESS_EDIT_ACCOUNT",
+        "MSG": "Your account has been successfully updated!"
+    },
+    "SUCCESS_REMOVE_ACCOUNT": {
+        "TYPE": "SUCCESS",
+        "COD": "SUCCESS_REMOVE_ACCOUNT",
+        "MSG": "Account has been successfully removed!"
+    },
+    "INFO_ID_INVALID": {
+        "TYPE": "INFO",
+        "COD": "INFO_ID_INVALID",
+        "MSG": "Id is no valid!"
+    },
+    "INFO_USER_NOT_FOUND": {
+        "TYPE": "INFO",
+        "COD": "INFO_USER_NOT_FOUND",
+        "MSG": "User not found!"
+    },
+    "ERROR_POSTAGEM_NOT_EXIST": {
+        "TYPE": "ERROR",
+        "COD": "ERROR_POSTAGEM_NOT_EXIST",
+        "MSG": "Não foi possivel encontrar uma postagem com esse id."
+    }
+}

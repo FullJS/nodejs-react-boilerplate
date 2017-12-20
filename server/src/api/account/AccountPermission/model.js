@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const AccountPermissionSchema = new mongoose.Schema({
     type: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    role: [{
+    roles: [{
         componentName: {
             type: String,
             required: true
@@ -21,8 +22,6 @@ const AccountPermissionSchema = new mongoose.Schema({
     }]
 });
 
-
 const AccountPermission = mongoose.model('AccountPermission', AccountPermissionSchema);
-
 module.exports = { AccountPermission };
 
