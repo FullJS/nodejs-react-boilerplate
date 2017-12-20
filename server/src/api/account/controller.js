@@ -3,6 +3,8 @@ const _ = require('lodash');
 const { Account } = require('./model');
 const { ObjectID } = require('mongodb')
 
+const SendMain = require('../../smtp/gmail');
+
 const create = (req, res) => {
     var body = _.pick(req.body, ['firstName', 'lastName', 'local',
         'facebook', 'twitter', 'google'
@@ -11,6 +13,9 @@ const create = (req, res) => {
     var account = new Account(body);
 
     account.save().then((doc) => {
+
+        SendMain(body.local.email, 'Conta criada com sucesso', 'Conta criada com sucesso');
+
         return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
     }, (e) => {
         return res.status(400).send(e)
