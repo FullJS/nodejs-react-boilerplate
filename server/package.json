@@ -4,7 +4,7 @@
   "description": "Boilerplate to Node.js",
   "main": "server.js",
   "scripts": {
-    "start": "sh ./scripts/start-dev.sh",
+    "start": "./scripts/start-dev.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -45,6 +45,8 @@
     "mongodb": "^3.0.0-rc0",
     "mongoose": "^4.13.7",
     "mongoose-id-validator": "^0.4.3",
+    "nodemailer": "^4.4.1",
+    "nodemailer-smtp-transport": "^2.7.4",
     "validator": "^9.2.0"
   },
   "devDependencies": {
