@@ -43,5 +43,4 @@ export function requireAuthentication(Component) {
 	});
 
 	return withRouter(connect(mapStateToProps)(AuthenticatedComponent));
-
 }
