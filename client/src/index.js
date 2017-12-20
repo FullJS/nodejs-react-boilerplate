@@ -2,25 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Button from 'antd/lib/button';
-
-import AppRouter from './route/AppRouter';
+import AppRouter from './route/appRouter';
+import StoreConfigure from './store/configure';
 
 import './App.css';
 
+
+const store = StoreConfigure();
+
 const App = (
-
-  <div className="App">
-    <Button type="primary">Button</Button>
-  </div>
-);
-
-/* const App = (
   <div>
-    <Provider>
+    <Provider  store={store}>
       <AppRouter />
     </Provider>
   </div>
-) */
+) 
 
 ReactDOM.render(App, document.getElementById('root'));
