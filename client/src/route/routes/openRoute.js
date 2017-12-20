@@ -1,14 +1,14 @@
 
 import React from 'react';
-/* import { Route } from 'react-router-dom'; */
+import { Route } from 'react-router-dom';
+
+import Login from '../../screns/privilege/open/login/index';
 
 
 const OpenRoute = (props) => {
   return (
     <div>
-      {/*       <Route exact path="/login" component={Login} />
-      <Route exact path="/createAccount" component={CreateAccount} />
-      <Route exact path="/about" component={About} /> */}
+      <Route exact path="/login" component={Login} />
     </div>
   );
 }
