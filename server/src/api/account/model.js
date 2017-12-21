@@ -82,7 +82,15 @@ const AccountSchema = new mongoose.Schema({
     permission: [{
         type: mongoose.Schema.ObjectId,
         ref: 'AccountPermission'
-    }]
+    }],
+    locked: {
+        type: Boolean,
+        default: false,
+    },
+    enable: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 

@@ -10,5 +10,6 @@ accountRouter.route('/').patch(accountController.update);
 accountRouter.route('/:id').get(accountController.getById);
 accountRouter.route('/:skip/:limit').get(accountController.getList);
 accountRouter.route('/').get(accountController.count);
+accountRouter.route('/validation/:token').get(accountController.validation);
 
 module.exports = { accountRouter };

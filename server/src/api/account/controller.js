@@ -3,7 +3,8 @@ const _ = require('lodash');
 const { Account } = require('./model');
 const { ObjectID } = require('mongodb')
 
-const SendMain = require('../../smtp/gmail');
+const { Sender } = require('../../email/sender');
+const { Templater } = require('../../email/templater');
 
 const create = (req, res) => {
     var body = _.pick(req.body, ['firstName', 'lastName', 'local',
@@ -14,10 +15,25 @@ const create = (req, res) => {
 
     account.save().then((doc) => {
 
-        SendMain(body.local.email, 'Conta criada com sucesso', 'Conta criada com sucesso');
+        let validationLink = req.headers.host + "/account/validation/" + doc._id;
 
-        return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+        let replace = {
+            email: body.local.email,
+            link: validationLink
+        }
+
+        Templater('accountCreate', replace).then((mail) => {
+            Sender(body.local.email, mail).then(() => {
+                return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+            })
+        }).catch((e) => {
+            //Notificar administrador para desbloquear usuario manualmente
+            console.error(e);
+            return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+        })
+
     }, (e) => {
+        console.error(e);
         return res.status(400).send(e)
     })
 };
@@ -95,6 +111,25 @@ const getById = (req, res) => {
     }).catch((e) => res.status(400).send(e));
 };
 
+const validation = (req, res) => {
+    var id = parseInt(req.params.token, 20);
+
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send({ cod: 'INFO_ID_INVALID' });
+    }
+
+    Account.findByIdAndUpdate(id, { $set: { enable: true } })
+        .then((accountEdited) => {
+            if (!accountEdited) {
+                return res.status(404).send({ cod: 'INFO_USER_NOT_FOUND' });
+            }
+            return res.send({ cod: "SUCCESS_ENABLE_ACCOUNT" });
+        }).catch((e) => {
+            return res.status(400).send(e);
+        });
+
+}
+
 module.exports = {
     create,
     remove,
@@ -102,4 +137,5 @@ module.exports = {
     getList,
     count,
     getById,
+    validation
 };

@@ -28,5 +28,10 @@
         "TYPE": "ERROR",
         "COD": "ERROR_POSTAGEM_NOT_EXIST",
         "MSG": "Não foi possivel encontrar uma postagem com esse id."
+    },
+    "SUCCESS_ENABLE_ACCOUNT": {
+        "TYPE": "INFO",
+        "COD": "SUCCESS_ENABLE_ACCOUNT",
+        "MSG": "A conta foi ativada com sucesso."
     }
 }
