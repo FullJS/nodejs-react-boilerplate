@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import sessionReducer from './session/reducer';
+import sessionReducer from '../session/reducer';
 
 export default () => {
   const store = createStore(

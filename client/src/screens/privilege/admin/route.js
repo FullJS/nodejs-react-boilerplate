@@ -8,7 +8,7 @@ import AuthenticatedComponent from '../authenticatedComponent'; */
 const AdminRoute = (props) => {
   return (
     <div>
-      {/*       <Route path="/home" component={requireAuthentication(FaceFarmLayout)} /> */}
+      {/*<Route path="/home" component={requireAuthentication(FaceFarmLayout)} /> */}
     </div>
   );
 }

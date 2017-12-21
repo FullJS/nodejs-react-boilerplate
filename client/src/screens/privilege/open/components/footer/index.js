@@ -8,7 +8,7 @@ class Footer extends Component {
     render() {
         return (
             <Layout.Footer>
-                oI ASKJDHJKWHAJKSDDHKASJHDJKASDH
+                <h2>Footer</h2>
             </Layout.Footer>
         );
     }
