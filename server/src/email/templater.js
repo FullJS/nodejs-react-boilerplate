@@ -1,11 +1,12 @@
 const fs = require('fs');
+var path = require('path');
 const _ = require('lodash')
 
 const changeWord = require('./variables.json');
 
-const templates = './templates';
-const fileMessage = 'message.html';
-const fileSubject = 'subject.html';
+const templates = '/templates/';
+const fileMessage = '/message.html';
+const fileSubject = '/subject.html';
 
 
 const readFile = (fileName, type) => {
@@ -22,10 +23,10 @@ function replaceAll(str, from, to) {
 
 const Templater = (type = 'accountCreate', replace = { email: 'teste', link: 'teste ' }) => {
   return new Promise(function (resolve, reject) {
-    let path = templates + "/" + type + "/";
+    let templatesPath =  path.join(__dirname, templates, type);
 
-    let messageLocation = path + fileMessage;
-    let subjectLocation = path + fileSubject;
+    let messageLocation = templatesPath + fileMessage;
+    let subjectLocation = templatesPath + fileSubject;
 
     readFile(messageLocation, 'utf8').then((message) => {
       readFile(subjectLocation, 'utf8').then((subject) => {

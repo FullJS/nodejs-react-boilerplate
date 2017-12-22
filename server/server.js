@@ -13,6 +13,10 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    console.log("Recived: ", req.body);
+    next();
+}) 
 
 app.use('/account', accountRouter);
 
