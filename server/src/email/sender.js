@@ -17,13 +17,13 @@ const Sender = (toIn, send = { subject: '', message: '' }) => {
       from: 'jahnkehoch@gmail.com',
       to: toIn,
       subject: send.subject,
-      message: send.message
+      html: send.message
     };
 
-    transporte.sendMail(email, function (err, info) {
-      if (err) {
-        console.error(erro);
-        reject(erro);     
+    transporte.sendMail(email, function (e, info) {
+      if (e) {
+        console.error(e);
+        reject(e);     
       }
       resolve(info);
     });

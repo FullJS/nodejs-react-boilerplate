@@ -13,13 +13,13 @@ import './index.css';
 
 const OpenRoute = (props) => {
   return (
-    <Layout>
-      <Header />
+    <Layout className="page">
+      <Header className="header"/>
       <Layout.Content className="content">
         <Route exact path="/login" component={Login} />
         <Route exact path="/home" component={Home} />
       </Layout.Content>
-      <Footer />
+      <Footer className="footer"/>
     </Layout>
   );
 }

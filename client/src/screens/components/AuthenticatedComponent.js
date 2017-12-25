@@ -19,7 +19,7 @@ export function requireAuthentication(Component) {
 		checkAuth(isAuthenticated) {
 			if (!isAuthenticated) {
 				this.props.dispatch(resetApplication());
-				this.props.history.push('/login');
+				this.props.history.push('/');
 			}
 		}
 

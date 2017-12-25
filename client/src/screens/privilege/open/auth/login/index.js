@@ -43,6 +43,7 @@ class Login extends Component {
     });
 
     return (
+      <div className="content">
       <Row >
         <Col md={12}>col-12</Col>
         <Col md={12} >
@@ -54,16 +55,14 @@ class Login extends Component {
                   <AutoComplete
                     onSearch={this.handleSearch}
                     placeholder="E-mail"
-                    addonAfter={<Icon type="setting" />}
-                  >
+                    addonAfter={<Icon type="setting" />}>
                     {children}
                   </AutoComplete>
                 </FormItem>
                 <FormItem>
                   <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password" placeholder="Password"
-                  />
+                    type="password" placeholder="Password"/>
                 </FormItem>
                 <FormItem>
                   <Checkbox>Remember me</Checkbox>
@@ -78,6 +77,7 @@ class Login extends Component {
           </div>
         </Col>
       </Row>
+      </div>
     );
   }
 }

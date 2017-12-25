@@ -1,3 +1,30 @@
-.content {
-    min-height: 100%;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: #F0F2F5;
+}
+
+.page {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+
+.page .header {
+  flex: 0 1 auto;
+  /* The above is shorthand for:
+  flex-grow: 0,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+}
+
+.page .content {
+  flex: 1 1 auto;
+}
+
+.page .footer {
+  flex: 0 1 40px;
 }

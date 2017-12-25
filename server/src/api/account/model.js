@@ -24,11 +24,7 @@ const AccountSchema = new mongoose.Schema({
         email: {
             type: String,
             trim: true,
-            default: '',
-            validate: {
-                validator: validator.isEmail,
-                message: '{VALUE} is not a valid e-mail'
-            }
+            default: ''
         },
         password: {
             type: String,

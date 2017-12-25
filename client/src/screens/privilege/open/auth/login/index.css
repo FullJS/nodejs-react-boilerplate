@@ -25,3 +25,7 @@
 .login-form-button {
     width: 100%;
 }
+
+.page .content {
+    flex: 1 1 auto;
+  }

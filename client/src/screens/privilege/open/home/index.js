@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Tabs, Button, Icon, Checkbox, Row, Col, Alert, AutoComplete, Card } from 'antd';
-import { Layout } from 'antd';
+import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
 
+
 import styles from './index.css';
-
-
-const { TabPane } = Tabs;
 
 class Login extends Component {
 
@@ -19,12 +17,41 @@ class Login extends Component {
 
   render() {
     return (
-      <Row >
-        <Col md={12}>col-12</Col>
-        <Col md={12} >
-          <h1>Home Page</h1>
-        </Col>
-      </Row>
+      <Layout.Content style={{ padding: '0 50px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
+
+        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>Content</div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </Layout.Content>
     );
   }
 }

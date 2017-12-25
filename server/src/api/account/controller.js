@@ -25,6 +25,10 @@ const create = (req, res) => {
         Templater('accountCreate', replace).then((mail) => {
             Sender(body.local.email, mail).then(() => {
                 return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+            }).catch((e) => {
+                //Notificar administrador para desbloquear usuario manualmente
+                console.error(e);
+                return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
             })
         }).catch((e) => {
             //Notificar administrador para desbloquear usuario manualmente
