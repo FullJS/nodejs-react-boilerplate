@@ -43,41 +43,48 @@ class Login extends Component {
     });
 
     return (
-      <div className="content">
       <Row >
-        <Col md={12}>col-12</Col>
         <Col md={12} >
-          <div className="container">
-            <div className="login-form text-center">
-              <h1>Login</h1>
-              <Form onSubmit={this.handleSubmit} className="login-form">
-                <FormItem>
-                  <AutoComplete
-                    onSearch={this.handleSearch}
-                    placeholder="E-mail"
-                    addonAfter={<Icon type="setting" />}>
-                    {children}
-                  </AutoComplete>
-                </FormItem>
-                <FormItem>
+          <div className="login-form text-center">
+            <h1>Login</h1>
+            <Form onSubmit={this.handleSubmit} className="login-form">
+              <FormItem>
+{/*                 <AutoComplete
+                  onSearch={this.handleSearch}
+                  placeholder="E-mail"
+                  addonAfter={<Icon type="setting" />}>
+                  {children}
+                </AutoComplete> */}
+                <AutoComplete
+                  size="large"
+                  style={{ width: '100%' }}
+                  onSearch={this.handleSearch}
+                  dataSource={this.state.emails.map(domain => `aa@${domain}`)}
+                  optionLabelProp="text"
+                >
                   <Input
+                    placeholder="E-mail"
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password" placeholder="Password"/>
-                </FormItem>
-                <FormItem>
-                  <Checkbox>Remember me</Checkbox>
-                  <a className="login-form-forgot" href="">Forgot password</a>
-                  <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
+                  />
+                </AutoComplete>
+              </FormItem>
+              <FormItem>
+                <Input
+                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  type="password" placeholder="Password" />
+              </FormItem>
+              <FormItem>
+                <Checkbox>Remember me</Checkbox>
+                <a className="login-form-forgot" href="">Forgot password</a>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                  Log in
                     </Button>
-                  Or <a href="">register now!</a>
-                </FormItem>
-              </Form>
-            </div>
+                Or <a href="">register now!</a>
+              </FormItem>
+            </Form>
           </div>
         </Col>
       </Row>
-      </div>
     );
   }
 }
