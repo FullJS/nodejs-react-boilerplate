@@ -30,7 +30,7 @@ const AccountSchema = new mongoose.Schema({
             type: String,
             trim: true,
             maxlength: 15,
-            minlength: 6,
+            minlength: 8,
             required: true
         },
     },
