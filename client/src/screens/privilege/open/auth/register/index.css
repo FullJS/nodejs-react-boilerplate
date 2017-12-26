@@ -1,0 +1,16 @@
+.register-form {
+    width: 368px;
+    margin: 0 auto;
+}
+
+.register-container {
+    margin-top: 25px;
+}
+
+.register-form-forgot {
+    float: right;
+}
+
+.register-form-button {
+    width: 100%;
+}

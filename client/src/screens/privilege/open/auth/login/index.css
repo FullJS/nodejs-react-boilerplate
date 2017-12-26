@@ -3,8 +3,8 @@
     margin: 0 auto;
 }
 
-.login-form {
-    max-width: 300px;
+.login-container {
+     margin-top: 100px;
 }
 
 .login-form-forgot {

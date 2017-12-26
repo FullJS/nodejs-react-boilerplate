@@ -44,7 +44,7 @@ class Login extends Component {
 
     return (
       <Row >
-        <Col md={12} >
+        <Col md={12} className="login-container">
           <div className="login-form text-center">
             <h1>Login</h1>
             <Form onSubmit={this.handleSubmit} className="login-form">

@@ -8,6 +8,7 @@ import Footer from './components/footer/index'
 
 import Home from './home/index';
 import Login from './auth/login/index';
+import Register from './auth/register/index';
 
 import './index.css';
 
@@ -17,6 +18,7 @@ const OpenRoute = (props) => {
       <Header className="header"/>
       <Layout.Content className="content">
         <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
         <Route exact path="/home" component={Home} />
       </Layout.Content>
       <Footer className="footer"/>
