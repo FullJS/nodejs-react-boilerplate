@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Icon, Row, Col, AutoComplete, Checkbox } from 'antd';
+import { withRouter, Link } from 'react-router-dom';
 
-import { withRouter } from 'react-router-dom';
+import './index.css';
 
 const FormItem = Form.Item;
-
-
 class Login extends Component {
 
   constructor(props) {
@@ -65,7 +64,7 @@ class Login extends Component {
                 <Button type="primary" htmlType="submit" className="login-form-button">
                   Log in
                     </Button>
-                Or <a href="">register now!</a>
+                Or <Link to="/register"> register now!</Link>
               </FormItem>
             </Form>
           </div>

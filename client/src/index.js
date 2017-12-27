@@ -7,8 +7,6 @@ import StoreConfigure from './store/configure';
 
 import './App.css';
 
-import { Layout } from 'antd';
-
 const store = StoreConfigure();
 
 const App = (
