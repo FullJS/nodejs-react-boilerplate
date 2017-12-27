@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, Tabs, Button, Icon, Checkbox, Row, Col, Alert, AutoComplete, Card } from 'antd';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { Link } from 'react-router-dom';
+import { Layout, Breadcrumb } from 'antd';
 
-
-import styles from './index.css';
 
 class Login extends Component {
 

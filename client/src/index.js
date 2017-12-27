@@ -2,16 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import AppRouter from './AppRoute';
+import AppRouter from './route/AppRoute';
 import StoreConfigure from './store/configure';
-
-import { Layout } from 'antd';
 
 import './App.css';
 
+import { Layout } from 'antd';
+
 const store = StoreConfigure();
-
-
 
 const App = (
     <Provider store={store}>

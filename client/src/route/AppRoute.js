@@ -4,14 +4,12 @@ import {
   Route,
   BrowserRouter,
   Switch,
-  withRouter,
   Redirect,
-  browserHistory
 } from 'react-router-dom';
 
-import AdminRoute from './screens/privilege/admin/route';
-import OpenRoute from './screens/privilege/open/route';
-import UserRoute from './screens/privilege/user/route';
+import AdminRoute from '../screens/privilege/admin/route';
+import OpenRoute from '../screens/privilege/open/route';
+import UserRoute from '../screens/privilege/user/route';
 
 class AppRouter extends Component {
 

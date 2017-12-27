@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Input, Tabs, Button, Icon, Checkbox, Row, Col, Alert, AutoComplete, Card } from 'antd';
+import { Form, Input, Button, Icon, Row, Col, AutoComplete, Checkbox } from 'antd';
 
-import { Link } from 'react-router-dom';
-
-import styles from './index.css';
+import { withRouter } from 'react-router-dom';
 
 const FormItem = Form.Item;
-const Option = AutoComplete.Option;
 
-const { TabPane } = Tabs;
 
 class Login extends Component {
 
@@ -37,10 +33,6 @@ class Login extends Component {
   }
 
   render() {
-    const { emails } = this.state;
-    const children = emails.map((email) => {
-      return <Option key={email}>{email}</Option>;
-    });
 
     return (
       <Row >
@@ -49,12 +41,6 @@ class Login extends Component {
             <h1>Login</h1>
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
-{/*                 <AutoComplete
-                  onSearch={this.handleSearch}
-                  placeholder="E-mail"
-                  addonAfter={<Icon type="setting" />}>
-                  {children}
-                </AutoComplete> */}
                 <AutoComplete
                   size="large"
                   style={{ width: '100%' }}
@@ -89,5 +75,4 @@ class Login extends Component {
   }
 }
 
-
-export default Login;
+export default withRouter(Login);

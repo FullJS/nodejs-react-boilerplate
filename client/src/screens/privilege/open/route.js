@@ -7,8 +7,8 @@ import Header from './components/header/index'
 import Footer from './components/footer/index'
 
 import Home from './home/index';
-import Login from './auth/login/index';
-import Register from './auth/register/index';
+import Login from './login/index';
+import Register from './register/index';
 
 import './index.css';
 

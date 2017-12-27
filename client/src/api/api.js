@@ -1,7 +1,6 @@
-/* global fetch */
+import store from '../store/configure';
 
-import apiConfig from 'services/api/config';
-import * as sessionSelectors from 'services/session/selectors';
+import apiConfig from './config';
 
 export const handleErrors = (response) => {
 
@@ -28,15 +27,15 @@ export const handleErrors = (response) => {
     })
 }
 
-export const fetchApi = (endPoint, payload = {}, method = 'get', pHeaders = {}) => {
+const fetchApi = (endPoint, payload = {}, method = 'get', pHeaders = {}) => {
 
     let headers = new Headers(pHeaders);
 
-    const accessToken = sessionSelectors.get().token;
+    //const accessToken = store.getState().session.jwt;
 
-    if (accessToken) {
-        headers.append("x-auth", accessToken);
-    }
+    //if (accessToken) {
+    //    headers.append("x-auth", accessToken);
+    //}
 
     let params = {
         method: method.toLowerCase(),
@@ -48,5 +47,7 @@ export const fetchApi = (endPoint, payload = {}, method = 'get', pHeaders = {}) 
 
     const request = new Request(`${apiConfig.url}${endPoint}`, params);
 
-    return fetch(request).then(handleErrors);
+    return fetch(request);
 }
+
+export default fetchApi;

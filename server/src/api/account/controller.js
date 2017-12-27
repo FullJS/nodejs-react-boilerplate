@@ -1,10 +1,14 @@
 const _ = require('lodash');
 
 const { Account } = require('./model');
+const { AccountPermission } = require('./AccountPermission/model');
 const { ObjectID } = require('mongodb')
 
 const { Sender } = require('../../email/sender');
 const { Templater } = require('../../email/templater');
+
+const user = 'user';
+const admin = 'admin';
 
 const create = (req, res) => {
     var body = _.pick(req.body, ['firstName', 'lastName', 'local',
@@ -13,32 +17,36 @@ const create = (req, res) => {
 
     var account = new Account(body);
 
-    account.save().then((doc) => {
+    AccountPermission.findOne({ type: user }).select('_id').then((accountPermission) => {
+        account.permission = accountPermission._id;
 
-        let validationLink = req.headers.host + "/account/validation/" + doc._id;
+        account.save().then((doc) => {
 
-        let replace = {
-            email: body.local.email,
-            link: validationLink
-        }
+            let validationLink = req.headers.host + "/account/token/validation/" + doc._id;
 
-        Templater('accountCreate', replace).then((mail) => {
-            Sender(body.local.email, mail).then(() => {
-                return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+            let replace = {
+                email: body.local.email,
+                link: validationLink
+            }
+
+            Templater('accountCreate', replace).then((mail) => {
+                Sender(body.local.email, mail).then(() => {
+                    return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+                }).catch((e) => {
+                    //Notificar administrador para desbloquear usuario manualmente
+                    console.error(e);
+                    return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
+                })
             }).catch((e) => {
                 //Notificar administrador para desbloquear usuario manualmente
                 console.error(e);
                 return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
             })
-        }).catch((e) => {
-            //Notificar administrador para desbloquear usuario manualmente
-            console.error(e);
-            return res.send({ cod: "SUCCESS_CREATE_ACCOUNT" })
-        })
 
-    }, (e) => {
-        console.error(e);
-        return res.status(400).send(e)
+        }, (e) => {
+            console.error(e);
+            return res.status(400).send(e)
+        })
     })
 };
 
@@ -54,7 +62,10 @@ const remove = (req, res) => {
             return res.status(404).send({ cod: 'INFO_USER_NOT_FOUND' })
         }
         return res.send({ cod: "SUCCESS_REMOVE_ACCOUNT" })
-    }).catch((e) => res.status(400).send(e))
+    }).catch((e) => {
+        console.error(e);
+        return res.status(400).send(e)
+    });
 };
 
 const update = (req, res) => {
@@ -77,17 +88,21 @@ const update = (req, res) => {
                 return res.status(404).send({ cod: 'INFO_USER_NOT_FOUND' })
             }
             return res.send({ cod: "SUCCESS_EDIT_ACCOUNT" })
-        }).catch((e) => { return res.status(400).send(e) });
+        }).catch((e) => {
+            console.error(e);
+            return res.status(400).send(e)
+        });
 };
 
 const getList = (req, res) => {
     var limit = parseInt(req.params.limit, 10);
     var skip = parseInt(req.params.skip, 10);
 
-    Account.find().skip(skip).limit(limit)
+    Account.find().skip(skip).limit(limit).populate('permission')
         .then((accountList) => {
             return res.send({ accountList })
         }), (e) => {
+            console.error(e);
             return res.status(400).send(e)
         }
 };
@@ -97,6 +112,7 @@ const count = (req, res) => {
         .then((counter) => {
             return res.send({ counter })
         }), (e) => {
+            console.error(e);
             return res.status(400).send(e)
         }
 };
@@ -107,28 +123,34 @@ const getById = (req, res) => {
         return res.status(404).send({ cod: 'INFO_ID_INVALID' })
     }
 
-    Account.findById(id).then((account) => {
+    Account.findById(id).populate('permission').then((account) => {
         if (!account) {
             return res.status(404).send({ cod: 'INFO_USER_NOT_FOUND' })
         }
         return res.send({ account })
-    }).catch((e) => res.status(400).send(e));
+    }).catch((e) => {
+        console.error(e);
+        return res.status(400).send(e);
+    });
 };
 
 const validation = (req, res) => {
-    var id = parseInt(req.params.token, 20);
+    let id = req.params.token;
 
     if (!ObjectID.isValid(id)) {
         return res.status(404).send({ cod: 'INFO_ID_INVALID' });
     }
 
-    Account.findByIdAndUpdate(id, { $set: { enable: true } })
+    let _id = new ObjectID(id);
+
+    Account.findByIdAndUpdate(_id, { $set: { enable: true } })
         .then((accountEdited) => {
             if (!accountEdited) {
                 return res.status(404).send({ cod: 'INFO_USER_NOT_FOUND' });
             }
             return res.send({ cod: "SUCCESS_ENABLE_ACCOUNT" });
         }).catch((e) => {
+            console.error(e);
             return res.status(400).send(e);
         });
 

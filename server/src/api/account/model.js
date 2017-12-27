@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const _ = require('lodash');
-var fs = require('fs');
+const fs = require('fs');
+const path = require('path');
 
 const AccountPermission = require('./AccountPermission/model');
+
+const privateKey = path.join(__dirname, '/keys/', 'private.key');
+const publicKey = path.join(__dirname, '/keys/', 'public.pem');
 
 const AccountSchema = new mongoose.Schema({
     firstName: {
@@ -24,6 +28,7 @@ const AccountSchema = new mongoose.Schema({
         email: {
             type: String,
             trim: true,
+            unique: true,
             default: ''
         },
         password: {
@@ -91,30 +96,19 @@ const AccountSchema = new mongoose.Schema({
 
 
 AccountSchema.methods.generateAuthToken = function () {
-    var Account = this;
+    let Account = this;
 
-    var cert = fs.readFileSync('server/keys/Account.private_key.pem');
-    var access = 'auth';
-    var token = jwt.sign({
+    let cert = fs.readFileSync(privateKey);
+    let access = 'auth';
+    let token = jwt.sign({
         access,
         _id: Account._id.toHexString(),
-        nomeCompleto: Account.nomeCompleto,
-        imagemPerfil: Account.imagemPerfil,
-        userType: 'Account',
+        firstName: Account.firstName,
+        lastName: Account.lastName,
+        permission: Account.permission,
     }, cert, { algorithm: 'RS256' });
 
-    let tokenAuth = Account.tokens.filter((t) => {
-        if (t.access === 'auth') {
-            t.token = token;
-            return true;
-        }
-
-        return false;
-    });
-
-    if (tokenAuth.length === 0) {
-        Account.tokens.push({ access, token });
-    }
+    Account.tokens.push({ access, token });
 
     return Account.save().then(() => {
         return token;
@@ -122,15 +116,15 @@ AccountSchema.methods.generateAuthToken = function () {
 };
 
 AccountSchema.statics.findByToken = function (token) {
-    var Account = this;
-    var decoded;
+    let Account = this;
+    let decoded;
 
-    var cert = fs.readFileSync('./keys/public.pem');
+    let cert = fs.readFileSync(publicKey);
 
     try {
         decoded = jwt.verify(token, cert, { algorithms: ['RS256'] });
     } catch (e) {
-        console.log(e);
+        console.error(e);
         return Promise.reject(e);
     }
 
@@ -141,38 +135,35 @@ AccountSchema.statics.findByToken = function (token) {
     });
 };
 
-AccountSchema.statics.findByCredentials = function (email, login, senha) {
-    var Account = this;
+AccountSchema.statics.findByCredentials = function (email, password) {
+    let Account = this;
 
-    let data;
-    if (login) {
-        data = { login };
-    } else {
-        data = { email };
+    let data = {
+        email: email
     }
 
     let query = {
         _id: 1,
-        bloqueado: 1,
-        email: 1,
-        nomeCompleto: 1,
-        tokens: 1,
-        imagemPerfil: 1,
-        senha: 1
+        firstName: 1,
+        lastName: 1,
+        local: {
+            email: 1
+        }
     }
 
     return Account.findOne(data, query).then((Account) => {
-
-        if (!Account) {
-            return Promise.reject(Account);
-        }
-
         return new Promise((resolve, reject) => {
-            bcrypt.compare(senha, Account.senha, (err, res) => {
+
+            if (!Account) {
+                reject(Account);
+            }
+
+            bcrypt.compare(password, Account.local.password, (e, res) => {
                 if (res) {
                     resolve(Account);
                 } else {
-                    reject();
+                    console.error(e);
+                    reject(e);
                 }
             });
         });
@@ -180,13 +171,13 @@ AccountSchema.statics.findByCredentials = function (email, login, senha) {
 };
 
 AccountSchema.pre('save', function (next) {
-    var Account = this;
+    let Account = this;
 
-    if (Account.isModified('senha')) {
-        var senha = Account.senha
+    if (Account.isModified('local.password')) {
+        let password = Account.local.password
         bcrypt.genSalt(1, (err, salt) => {
-            bcrypt.hash(senha, salt, (err, hash) => {
-                Account.senha = hash;
+            bcrypt.hash(password, salt, (err, hash) => {
+                Account.local.password = hash;
                 next();
             })
         })
