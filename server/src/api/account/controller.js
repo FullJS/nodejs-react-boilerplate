@@ -156,6 +156,18 @@ const validation = (req, res) => {
 
 }
 
+const login = (req, res) => {
+    let { credentials } = _.pick(req.body, ['credentials']);
+    
+    Account.findByCredentials(credentials.email, credentials.password).then((account) => {
+        return account.generateAuthToken().then((token) => {
+            res.header('x-auth', token).send(account);
+        })
+    }).catch((e) => {
+        res.status(400).send({ cod: "ERROR_INVALID_CREDENTIALS" });
+    });
+}
+
 module.exports = {
     create,
     remove,
@@ -163,5 +175,6 @@ module.exports = {
     getList,
     count,
     getById,
-    validation
+    validation,
+    login
 };

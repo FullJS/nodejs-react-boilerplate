@@ -34,7 +34,6 @@ const AccountSchema = new mongoose.Schema({
         password: {
             type: String,
             trim: true,
-            maxlength: 15,
             minlength: 8,
             required: true
         },
@@ -139,7 +138,7 @@ AccountSchema.statics.findByCredentials = function (email, password) {
     let Account = this;
 
     let data = {
-        email: email
+        'local.email': email
     }
 
     let query = {
@@ -151,9 +150,8 @@ AccountSchema.statics.findByCredentials = function (email, password) {
         }
     }
 
-    return Account.findOne(data, query).then((Account) => {
+    return Account.findOne(data).then((Account) => {
         return new Promise((resolve, reject) => {
-
             if (!Account) {
                 reject(Account);
             }
@@ -162,7 +160,6 @@ AccountSchema.statics.findByCredentials = function (email, password) {
                 if (res) {
                     resolve(Account);
                 } else {
-                    console.error(e);
                     reject(e);
                 }
             });
