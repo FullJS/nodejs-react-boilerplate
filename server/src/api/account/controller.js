@@ -44,8 +44,16 @@ const create = (req, res) => {
             })
 
         }, (e) => {
-            console.error(e);
-            return res.status(400).send(e)
+            let cod = "";
+            if (e.code === 11000) {
+                cod = "ERROR_EMAIL_ALREADY_REGISTERED";
+            }
+            if (cod) {
+                return res.status(400).send({e, cod})    
+            } else {
+                return res.status(400).send(e)    
+            }
+            
         })
     })
 };
@@ -158,7 +166,7 @@ const validation = (req, res) => {
 
 const login = (req, res) => {
     let { credentials } = _.pick(req.body, ['credentials']);
-    
+
     Account.findByCredentials(credentials.email, credentials.password).then((account) => {
         return account.generateAuthToken().then((token) => {
             res.header('x-auth', token).send(account);

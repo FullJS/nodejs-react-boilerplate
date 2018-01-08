@@ -14,6 +14,11 @@
         "COD": "SUCCESS_REMOVE_ACCOUNT",
         "MSG": "Account has been successfully removed!"
     },
+    "ERROR_EMAIL_ALREADY_REGISTERED": {
+        "TYPE": "ERROR",
+        "COD": "ERROR_EMAIL_ALREADY_REGISTERED",
+        "MSG": "Email already registered!"
+    },
     "INFO_ID_INVALID": {
         "TYPE": "INFO",
         "COD": "INFO_ID_INVALID",
@@ -33,5 +38,10 @@
         "TYPE": "INFO",
         "COD": "SUCCESS_ENABLE_ACCOUNT",
         "MSG": "A conta foi ativada com sucesso."
+    },
+    "ERROR_INVALID_CREDENTIALS": {
+        "TYPE": "ERROR",
+        "COD": "ERROR_POSTAGEM_NOT_EXIST",
+        "MSG": "You have entered an invalid username or password."
     }
 }
