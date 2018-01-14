@@ -26,3 +26,7 @@ export const showMessageByCod = (cod) => {
 			break;
 	}
 }
+
+export const getServerMessageByCod = (cod) => {
+	return pt_codes[cod];
+}

@@ -1,60 +1,52 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon, Row, Col, AutoComplete, Checkbox } from 'antd';
+import { Form, Input, Button, Icon, Row, Col, Checkbox } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
+import { withFormik } from 'formik'
+import { connect } from 'react-redux'
+import Yup from 'yup'
+
+import api from './api'
 
 import './index.css';
 
 const FormItem = Form.Item;
-class Login extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { email: '', senha: '' };
-
-    this.state = {
-      count: 0,
-      type: 'account',
-      status: '',
-      submitting: false,
-      emails: []
-    }
-  }
-
-  handleSearch = (value) => {
-    let emails;
-    if (!value || value.indexOf('@') >= 0) {
-      emails = [];
-    } else {
-      const emailList = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com'];
-      emails = emailList.map(domain => `${value}@${domain}`);
-    }
-    this.setState({ emails });
-  }
+class LoginForm extends Component {
 
   render() {
+    const {
+      errors,
+      touched,
+      handleSubmit,
+      handleChange
+    } = this.props;
 
     return (
       <Row >
-        <Col md={12} className="login-container">
+        <Col md={24} className="login-container ">
           <div className="login-form text-center">
             <h1>Login</h1>
-            <Form onSubmit={this.handleSubmit} className="login-form">
-              <FormItem>
-                <AutoComplete
-                  size="large"
-                  style={{ width: '100%' }}
-                  onSearch={this.handleSearch}
-                  dataSource={this.state.emails.map(domain => `aa@${domain}`)}
-                  optionLabelProp="text"
-                >
-                  <Input
-                    placeholder="E-mail"
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  />
-                </AutoComplete>
-              </FormItem>
-              <FormItem>
+            <Form onSubmit={handleSubmit}>
+              <FormItem
+                hasFeedback
+                validateStatus={touched.email && errors.email ? 'error' : ''}
+                help={touched.email && errors.email}
+              >
                 <Input
+                  name="email"
+                  type="text" placeholder="Email"
+                  prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  onChange={handleChange}
+                />
+              </FormItem>
+              <FormItem
+                hasFeedback
+                validateStatus={touched.password && errors.password ? 'error' : ''}
+                help={touched.password && errors.password}
+              >
+                <Input
+                  name="password"
+                  onChange={handleChange}
                   prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   type="password" placeholder="Password" />
               </FormItem>
@@ -70,8 +62,34 @@ class Login extends Component {
           </div>
         </Col>
       </Row>
-    );
+    )
   }
 }
 
-export default withRouter(Login);
+const FormikLogin = withFormik({
+  mapPropsToValues() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  validationSchema: Yup.object().shape({
+    email: Yup.string().email('Email not valid').required('Email is required!'),
+    password: Yup.string().required('Password is required!').min(8, 'Password is too short'),
+  }),
+  handleSubmit(values, { resetForm, setErrors }) {
+    console.log('Submiting')
+    api.login({
+      credentials: {
+        email: values.email,
+        password: values.password
+      }
+    }).then((r) => {
+      console.log('r', r);
+    }).catch((e) => {
+      console.log('e', e);
+    })
+  }
+})(LoginForm)
+
+export default connect()(withRouter(FormikLogin));

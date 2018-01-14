@@ -1,11 +1,11 @@
 import fetchApi from '../../../../api/api';
 
-const account = {
+const endpoints = {
 	create: '/account/',
 };
 
 export const create = (newAccount) => {
-	return fetchApi(account.create, newAccount, 'post', { "Content-Type": "application/json" });
+	return fetchApi(endpoints.create, newAccount, 'post', { "Content-Type": "application/json" });
 };
 
 const api = {
